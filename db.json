@@ -1,0 +1,29 @@
+{
+  "todos": [
+    {
+      "id": 0,
+      "title": "Hacer mercado",
+      "completed": false
+    },
+    {
+      "title": "Algo",
+      "completed": true,
+      "id": 2
+    },
+    {
+      "title": "Darte besitos",
+      "completed": false,
+      "id": 4
+    },
+    {
+      "title": "Hola2",
+      "completed": false,
+      "id": 5
+    },
+    {
+      "title": "Otra tarea",
+      "completed": false,
+      "id": 6
+    }
+  ]
+}
