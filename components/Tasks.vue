@@ -2,16 +2,21 @@
 	<div class="tasks-container">
 		<b-list-group>
 			<b-list-group-item :style="task.completed ? 'opacity: 0.4' : ''" @dblclick="setEditableMode(task)" v-for="task in filteredTodos" :key="task.id">
-				<div class="pr-3 d-inline">
-					<b-icon icon="check2" font-scale="1.2" class="cursor-pointer" :variant="task.completed ? 'success' : 'secondary'" v-b-tooltip.hover="task.completed ? 'Task already completed' : 'Mark as completed'" @click="handleTask({ task: task, action: 'UPDATE' })"></b-icon>
+				<div class="d-flex align-items-center">
+					<div class="pr-3 d-inline">
+						<b-icon icon="check2" font-scale="1.2" class="cursor-pointer" :variant="task.completed ? 'success' : 'secondary'" v-b-tooltip.hover="task.completed ? 'Task already completed' : 'Mark as completed'" @click="handleTask({ task: { ...task, completed: true }, action: 'PUT' })"></b-icon>
+					</div>
+
+					<b-input v-model="newTaskTitle" v-if="task.edit" @keyup.enter="updateTask(task)"></b-input>
+
+					<span v-else>
+						{{ task.title }}
+					</span>
+
+					<div class="pl-3 float-right">
+						<b-icon icon="x" font-scale="1.2" class="delete-icon" @click="handleTask({ task: task, action: 'DELETE' })" v-if="!task.completed"></b-icon>
+					</div>
 				</div>
-
-				<b-input v-model="task.title" v-if="task.edit"></b-input>
-				<span v-else>
-					{{ task.title }}
-				</span>
-
-				<b-icon icon="x" font-scale="1.2" class="float-right delete-icon" @click="handleTask({ task: task, action: 'DELETE' })" v-if="!task.completed"></b-icon>
 			</b-list-group-item>
 		</b-list-group>
 	</div>
@@ -41,17 +46,10 @@ export default {
 			}
 		},
 	},
-	watch: {
-		todos(newValue) {
-            console.log("🚀 ~ file: Tasks.vue ~ line 46 ~ todos ~ newValue", newValue)
-			if (newValue) {
-				this.$forceUpdate()
-			}			
-		}
-	},
 	data() {
 		return {
-			lastEditedTask: {},
+			lastEditedTask: null,
+			newTaskTitle: null,
 		};
 	},
 
@@ -72,7 +70,18 @@ export default {
 			});
 
 			this.lastEditedTask = task;
+			this.newTaskTitle = task.title
 		},
+		updateTask(task) {
+			this.handleTask({
+				task: {
+					...task,
+					edit: false,
+					title: this.newTaskTitle
+				},
+				action: 'PUT'
+			})
+		}
 	},
 };
 </script>

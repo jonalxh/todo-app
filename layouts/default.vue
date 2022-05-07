@@ -41,6 +41,7 @@ export default {
 			newTask: {
 				title: null,
 				completed: false,
+				edit: false
 			},
 		};
 	},

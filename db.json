@@ -2,13 +2,15 @@
   "todos": [
     {
       "id": 0,
-      "title": "Hacer mercado",
-      "completed": false
+      "title": "Hacer mercado3",
+      "completed": false,
+      "edit": false
     },
     {
+      "id": 1,
       "title": "Algo",
       "completed": true,
-      "id": 2
+      "edit": false
     }
   ]
 }
