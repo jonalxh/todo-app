@@ -6,11 +6,11 @@
 					<b-checkbox></b-checkbox>
 				</b-input-group-text>
 			</template>
-			<b-input placeholder="Type a new task title here" v-model="newTask" @keyup.enter="createTask" autofocus></b-input>
+			<b-input placeholder="Type a new task title here" v-model="newTask.title" @keyup.enter="createTask" autofocus></b-input>
 		</b-input-group>
 
 		<div class="pt-3">
-			<Tasks :todos="todos" class="mb-3"></Tasks>
+			<Tasks class="mb-3"></Tasks>
 
 			<Nuxt />
 		</div>
@@ -32,30 +32,28 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
 	name: "DefaultLayout",
-	async fetch() {
-		this.getTasks();
-	},
 	data() {
 		return {
-			newTask: null,
-			todos: [],
+			newTask: {
+				title: null,
+				completed: false,
+			},
 		};
 	},
 	methods: {
-		async getTasks() {
-			this.todos = await this.$axios.$get("todos");
+		...mapActions("todos", ["getTodos", "handleTask"]),
+		async createTask() {
+			const task = JSON.parse(JSON.stringify(this.newTask))
+			await this.handleTask({ task: task, action: "POST" });
+			this.newTask.title = null;
 		},
-		createTask() {
-      this.$axios.post("todos", {
-        title: this.newTask,
-        completed: false
-      }).then(res => {
-        this.todos.push(res.data)
-        this.newTask = null
-      })
-		},
+	},
+	created() {
+		this.getTodos();
 	},
 };
 </script>
