@@ -37,12 +37,14 @@ export default {
 			todos: (state) => state.todos.allTodos,
 		}),
 		filteredTodos() {
-			if (this.$route.name === "index") {
-				return this.todos;
-			} else if (this.$route.name === "active") {
-				return this.todos.filter((item) => !item.completed);
-			} else if (this.$route.name === "completed") {
-				return this.todos.filter((item) => item.completed);
+			if (this.$route) {
+				if (this.$route.name === "index") {
+					return this.todos;
+				} else if (this.$route.name === "active") {
+					return this.todos.filter((item) => !item.completed);
+				} else if (this.$route.name === "completed") {
+					return this.todos.filter((item) => item.completed);
+				}
 			}
 		},
 	},
@@ -70,18 +72,18 @@ export default {
 			});
 
 			this.lastEditedTask = task;
-			this.newTaskTitle = task.title
+			this.newTaskTitle = task.title;
 		},
 		updateTask(task) {
 			this.handleTask({
 				task: {
 					...task,
 					edit: false,
-					title: this.newTaskTitle
+					title: this.newTaskTitle,
 				},
-				action: 'PUT'
-			})
-		}
+				action: "PUT",
+			});
+		},
 	},
 };
 </script>

@@ -11,6 +11,12 @@
       "title": "Algo",
       "completed": true,
       "edit": false
+    },
+    {
+      "title": "Algo",
+      "completed": false,
+      "edit": false,
+      "id": 2
     }
   ]
 }

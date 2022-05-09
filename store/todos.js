@@ -1,3 +1,6 @@
+import axios from "axios"; // Necessary for Jest testing
+axios.defaults.baseURL = "http://localhost:3004/"
+
 export const state = () => ({
     allTodos: []
 })
@@ -41,12 +44,14 @@ export const mutations = {
 
 export const actions = {
     async getTodos({ commit }) {
-        let data = await this.$axios.$get("todos")
-        commit('setTodos', data)
+        return await axios.get("todos").then(res => {
+            let data = res.data
+            commit('setTodos', data)
+            return data
+        })
     },
     handleTask({ commit }, payload) {
         const task = payload.task
-        console.log("🚀 ~ file: todos.js ~ line 48 ~ handleTask ~ task", task)
 
         this.$axios({
             method: payload.action,
