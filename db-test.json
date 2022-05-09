@@ -13,10 +13,16 @@
       "edit": false
     },
     {
-      "title": "Testing task from Jest",
+      "title": "Algo",
       "completed": false,
       "edit": false,
       "id": 2
+    },
+    {
+      "title": "Testing task from Jest",
+      "completed": false,
+      "edit": false,
+      "id": 3
     }
   ]
 }

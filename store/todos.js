@@ -50,15 +50,16 @@ export const actions = {
             return data
         })
     },
-    handleTask({ commit }, payload) {
+    async handleTask({ commit }, payload) {
         const task = payload.task
 
-        this.$axios({
+        return await axios({
             method: payload.action,
             url: `todos/${task.id !== undefined ? task.id : ''}`,
             data: task
         }).then((res) => {
             commit('processTask', { action: payload.action, task: Object.keys(res.data).length ? res.data : task })
+            return res
         })
     }
 }
