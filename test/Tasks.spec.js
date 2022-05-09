@@ -1,14 +1,16 @@
-import { mount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import Tasks from '@/components/Tasks.vue'
 import { actions, mutations } from "@/store/todos.js"
 
 describe('Tasks', () => {
-  test('is a Vue instance', () => {
-    const wrapper = mount(Tasks)
+  test('Tasks component is correctly mounted', () => {
+    const wrapper = shallowMount(Tasks, {
+      stubs: ["b-list-group"]
+    })
     expect(wrapper.vm).toBeTruthy()
   })
 
-  test('Get todos from API and set the result to the state', async () => {
+  test('Get todos from API and set the result to the Vuex state', async () => {
     const commit = jest.fn() // Fake method
     const state = {
       allTodos: []
