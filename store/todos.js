@@ -32,7 +32,6 @@ export const mutations = {
         }
     },
     setTaskEditable(state, payload) {
-        payload.task.edit = true
         const currentTask = state.allTodos.find(item => item.id === payload.task.id)
 
         if (currentTask) {

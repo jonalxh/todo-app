@@ -1,22 +1,22 @@
 <template>
 	<div class="tasks-container">
 		<b-list-group>
-			<b-list-group-item :style="task.completed ? 'opacity: 0.4' : ''" @dblclick="setEditableMode(task)" v-for="task in filteredTodos" :key="task.id">
-				<div class="d-flex align-items-center">
-					<div class="pr-3 d-inline">
+			<b-list-group-item :style="task.completed ? 'opacity: 0.4' : ''" @dblclick="task.completed ? null : setEditableMode(task)" v-for="task in filteredTodos" :key="task.id">
+				<b-row class="align-items-center">
+					<b-col cols="1">
 						<b-icon icon="check2" font-scale="1.2" class="cursor-pointer" :variant="task.completed ? 'success' : 'secondary'" v-b-tooltip.hover="task.completed ? 'Task already completed' : 'Mark as completed'" @click="handleTask({ task: { ...task, completed: true }, action: 'PUT' })"></b-icon>
-					</div>
+					</b-col>
+					<b-col>
+						<b-input v-model="newTaskTitle" v-if="task.edit" @keyup.enter="updateTask(task)"></b-input>
 
-					<b-input v-model="newTaskTitle" v-if="task.edit" @keyup.enter="updateTask(task)"></b-input>
-
-					<span v-else>
-						{{ task.title }}
-					</span>
-
-					<div class="pl-3 float-right">
-						<b-icon icon="x" font-scale="1.2" class="delete-icon" @click="handleTask({ task: task, action: 'DELETE' })" v-if="!task.completed"></b-icon>
-					</div>
-				</div>
+						<span v-else>
+							{{ task.title }}
+						</span>
+					</b-col>
+					<b-col cols="1" v-if="!task.completed || !task.edit">
+						<b-icon icon="x" font-scale="1.2" class="delete-icon" @click="handleTask({ task: task, action: 'DELETE' })"></b-icon>
+					</b-col>
+				</b-row>
 			</b-list-group-item>
 		</b-list-group>
 	</div>
